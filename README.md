@@ -8,7 +8,7 @@ Synth-api is one of the major features provided by the [Synth](http://www.synthj
 
 Within your request handlers, you can either return data that will be JSONified and sent back to the client, a promise that will then return such data, or call the methods on the Express response object directly. e.g. `return { theData: true };`, `return fetchData().then(…);`, or `res.send(…)`.
 
-[![Build Status](https://travis-ci.org/JonAbrams/synth.png?branch=master)](https://travis-ci.org/JonAbrams/synth)
+[![Build Status](https://travis-ci.org/JonAbrams/synth-api.svg)](https://travis-ci.org/JonAbrams/synth-api)
 [![Code Climate](https://codeclimate.com/github/JonAbrams/synth.png)](https://codeclimate.com/github/JonAbrams/synth)
 
 ## Example Usage
