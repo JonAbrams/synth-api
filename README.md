@@ -55,7 +55,7 @@ Each handler object contains the following keys:
 - **funcName** - String - The name of function. e.g. `'getIndex'`
 - **resources** - Array[String] - The list of resources that this handler is a child of. e.g. the handler at '/api/tweets/1234/comments' would have a resources array of `['tweets', 'comments']`.
 
-## Defining API endpoints and Views
+## Defining API endpoints
 
 For this, just check out the existing [Synth Documentation](http://www.synthjs.com).
 
