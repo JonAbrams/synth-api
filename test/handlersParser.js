@@ -4,11 +4,15 @@ var _ = require('lodash'),
 require('should');
 
 describe('handlersParser module', function () {
-  var resourceParser = require('../lib/handlersParser.js');
+  var handlersParser = require('../lib/handlersParser.js');
 
   describe('good resources dir', function () {
-    var rootDir = path.join(__dirname, 'sample_project/back/resources');
-    var handlers = resourceParser.parse(rootDir);
+    var rootDir = path.join(__dirname, 'sample_project/resources');
+    var handlers = handlersParser.parse({
+      resourceDir: rootDir,
+      prefix: '/api',
+      timeout: 5000
+    });
 
     it('returns the expected structure', function () {
       handlers.should.eql([
@@ -123,11 +127,15 @@ describe('handlersParser module', function () {
   });
 
   describe('bad resources dir', function () {
-    var rootDir = path.join(__dirname, '/sample_project/back/badResources');
+    var rootDir = path.join(__dirname, '/sample_project/badResources');
 
     it('throws an error', function () {
       (function () {
-        resourceParser.parse(rootDir);
+        handlersParser.parse({
+          resourceDir: rootDir,
+          prefix: '/api',
+          timeout: 5000
+        });
       }).should.throw( 'Unrecognized method: not from '+ path.join(rootDir, 'broken.js') );
     });
   });
