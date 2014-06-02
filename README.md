@@ -10,6 +10,7 @@ Within your request handlers, you can either return data that will be JSONified 
 
 [![Build Status](https://travis-ci.org/JonAbrams/synth-api.svg)](https://travis-ci.org/JonAbrams/synth-api)
 [![Code Climate](https://codeclimate.com/github/JonAbrams/synth-api.png)](https://codeclimate.com/github/JonAbrams/synth-api)
+[![Test Coverage](https://codeclimate.com/github/JonAbrams/synth-api/coverage.png)](https://codeclimate.com/github/JonAbrams/synth-api)
 
 ## Example Usage
 
