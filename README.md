@@ -6,7 +6,7 @@ Each API endpoint is crafted by merely by giving it the name of the HTTP method 
 
 Synth-api is one of the major features provided by the [Synth](http://www.synthjs.com) framework but is made available here for people who just want a stripped down module, and not the rest of the Synth framework (which includes support for asset compilation and more fun things).
 
-Within your request handlers, you can either return data that will be JSONified and sent back to the client, a promise that will then return such data, or call the methods on the Express response object directly. e.g. `return { theData: true };`, `return fetchData().then(…);`, or `res.send(…)`.
+Within your request handlers, you can either return data that will be JSONified and sent back to the client (useful for stubbing during development), a promise that will then return such data, or call the methods on the Express response object directly. See the examples below.
 
 [![Build Status](https://travis-ci.org/JonAbrams/synth-api.svg)](https://travis-ci.org/JonAbrams/synth-api)
 [![Code Climate](https://codeclimate.com/github/JonAbrams/synth-api.png)](https://codeclimate.com/github/JonAbrams/synth-api)
@@ -31,9 +31,61 @@ synthApi.generateHandlers({
 app.listen(80);
 ```
 
-## generateHandlers()
+**resources/tweets/tweets.js**
+
+```javascript
+// Return data directly, useful for stubbing during development
+exports.getIndex = function (req, res) {
+  return {
+    tweets: [
+      {
+        message: "Fake tweet!",
+        createdAt: new Date()
+      }
+    ]
+  };
+};
+
+// Return a promise!
+exports.get = function (req, res) {
+  var id = req.params.id;
+  return req.db.collection('tweets').findOne({
+    id: id
+  }).then(function (data) {
+    return {
+      tweet: data
+    };
+  });
+};
+
+// Or talk directly to Express response object
+exports.post = function (req, res) {
+  req.db.collection('tweets').insert({
+    message: req.body.message,
+    createdAt: new Date()
+  }, function (err, data) {
+    if (err) {
+      res.send(500, "Something went wrong: " + err.message);
+    } else {
+      res.send(data);
+    }
+  });
+};
+```
+
+The above will create request handlers for the following routes:
+
+- `GET /api/tweets`
+- `GET /api/tweets/:id`
+- `POST /api/tweets`
+
+You can also create nested resources, handlers for PUT and DELETE, as well as custom actions. Learn more at (synthjs.com)[http://www.synthjs.com/docs/#creating-api-endpoints]
+
+## generateHandlers(options)
 
 ### Options
+
+An object with the following keys (all are optional).
 
 | option | Type | Default | What it does |
 |--------|------|---------|--------------|
@@ -41,7 +93,7 @@ app.listen(80);
 | resourceDir | String | process.cwd() + '/resources' | The directory to look into for generating the API endpoints. |
 |   app  | ExpressApp | null | If given an Express app, it will have the API and view endpoints automatically attached. |
 | timeout| Number | 5000 | Time (in milliseconds) before an error response is returned to the client instead of the expected result. |
-| catchAll | Function | null | An optional Express style request handler to handle any requests to the api path that are not handled (regardless of HTTP method). Can be used to return a custom 404 error. Note: This function should not return data or a promise. It should use the Express response object. |
+| catchAll | Function | null | An optional Express style request handler to handle any requests to the api path that are not handled (regardless of HTTP method). Can be used to return a custom 404 error. Note: This function should not return data or a promise. It should use the Express response object directly. |
 
 ### Returns
 
@@ -62,7 +114,7 @@ For this, just check out the existing [Synth Documentation](http://www.synthjs.c
 
 ## License
 
-[MIT](https://github.com/JonAbrams/synth/blob/master/LICENSE)
+[MIT](https://github.com/JonAbrams/synth-api/blob/master/LICENSE)
 
 ## Credit
 
