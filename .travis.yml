@@ -3,3 +3,5 @@ node_js:
   - "0.10"
 notifications:
   email: false
+env:
+  - secure: "KY0BcmpXJZISENtlf2CY2+kPcN+E+sYlcezn1H83q7A9Xa9dMcAHT4zhk9OvmnbWV07XR6rt5nfXiUIgxZ1ZZ2CNn8UOd87mtj4KwXLaAWX6JDMYbi5q8cc5Rjwj2MqjkxXAjyYLUSzMJXY/mprS7jwFjt5jB343XOpFaAuQwno="
