@@ -1,5 +1,4 @@
-var _ = require('lodash'),
-    path = require('path');
+var path = require('path');
 
 require('should');
 
