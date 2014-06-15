@@ -11,7 +11,13 @@ describe('synth-api module', function () {
   before(function () {
     app = express();
     app.use(bodyParser());
-    synthApi = require('../main');
+    app.use(synthApi.configParser());
+    app.use(function (req, res, next) {
+      if (req.config.auth) {
+        return res.send(401);
+      }
+      next();
+    });
     synthApi.generateHandlers({
       resourceDir: __dirname + '/sample_project/resources',
       app: app,
@@ -33,6 +39,13 @@ describe('synth-api module', function () {
           }
         ]
       })
+      .end(done);
+    });
+
+    it('cannot create a new product without auth', function (done) {
+      request(app).post('/api/products')
+      .send({ name: "Fancy shoes" })
+      .expect(401)
       .end(done);
     });
 

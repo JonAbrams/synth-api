@@ -21,6 +21,7 @@ describe('handlersParser module', function () {
           path: '/api/orders',
           isCustom: false,
           funcName: 'post',
+          config: {},
           resources: [
             'orders'
           ]
@@ -31,6 +32,7 @@ describe('handlersParser module', function () {
           path: '/api/products',
           isCustom: false,
           funcName: 'getIndex',
+          config: {},
           resources: [
             'products'
           ]
@@ -41,6 +43,7 @@ describe('handlersParser module', function () {
           path: '/api/products/:id',
           isCustom: false,
           funcName: 'get',
+          config: {},
           resources: [
             'products'
           ]
@@ -51,6 +54,7 @@ describe('handlersParser module', function () {
           path: '/api/products/specials',
           isCustom: true,
           funcName: 'getSpecials',
+          config: {},
           resources: [
             'products'
           ]
@@ -61,6 +65,7 @@ describe('handlersParser module', function () {
           path: '/api/products/oops',
           isCustom: true,
           funcName: 'getOops',
+          config: {},
           resources: [
             'products'
           ]
@@ -71,6 +76,7 @@ describe('handlersParser module', function () {
           path: '/api/products/501Oops',
           isCustom: true,
           funcName: 'put501Oops',
+          config: {},
           resources: [
             'products'
           ]
@@ -81,6 +87,9 @@ describe('handlersParser module', function () {
           path: '/api/products',
           isCustom: false,
           funcName: 'post',
+          config: {
+            auth: true
+          },
           resources: [
             'products'
           ]
@@ -91,6 +100,7 @@ describe('handlersParser module', function () {
           path: '/api/products/:productsId/variations',
           isCustom: false,
           funcName: 'post',
+          config: {},
           resources: [
             'products',
             'variations'
@@ -102,6 +112,7 @@ describe('handlersParser module', function () {
           path: '/api/products/:productsId/variations',
           isCustom: false,
           funcName: 'getIndex',
+          config: {},
           resources: [
             'products',
             'variations'
@@ -113,6 +124,7 @@ describe('handlersParser module', function () {
           path: '/api/products/forever',
           isCustom: true,
           funcName: 'getForever',
+          config: {},
           resources: [
             'products'
           ]
