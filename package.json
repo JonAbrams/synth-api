@@ -1,6 +1,6 @@
 {
   "name": "synth-api",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "author": "Jon Abrams <jon@jonabrams.com>",
   "description": "Scans through the specified directory and builts endpoints that are then added to an Express app.",
   "dependencies": {
