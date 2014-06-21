@@ -1,5 +1,9 @@
 var variations = [];
 
+exports.config = {
+  timeout: 500
+};
+
 exports.post = function (req, res) {
   variations.push({
     name: req.body.name,

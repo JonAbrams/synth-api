@@ -100,7 +100,9 @@ describe('handlersParser module', function () {
           path: '/api/products/:productsId/variations',
           isCustom: false,
           funcName: 'post',
-          config: {},
+          config: {
+            timeout: 500
+          },
           resources: [
             'products',
             'variations'
@@ -112,7 +114,9 @@ describe('handlersParser module', function () {
           path: '/api/products/:productsId/variations',
           isCustom: false,
           funcName: 'getIndex',
-          config: {},
+          config: {
+            timeout: 500
+          },
           resources: [
             'products',
             'variations'
