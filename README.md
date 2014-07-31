@@ -65,7 +65,7 @@ exports.post = function (req, res) {
     createdAt: new Date()
   }, function (err, data) {
     if (err) {
-      res.send(500, "Something went wrong: " + err.message);
+      res.status(500).send("Something went wrong: " + err.message);
     } else {
       res.send(data);
     }

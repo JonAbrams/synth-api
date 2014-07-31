@@ -149,7 +149,7 @@ describe('synth-api module', function () {
           app: app,
           timeout: 100,
           catchAll: function (req, res) {
-            res.send(404, 'this is not the data you are looking for');
+            res.status(404).send('this is not the data you are looking for');
           }
         });
     });
