@@ -35,9 +35,9 @@ exports.getSpecials = function (req, res) {
 };
 
 exports.getOops = function (req, res) {
-  throw { error: "Ouch!" };
+  throw new Error('Ouch!'); // includes stack trace
 };
 
 exports.put501Oops = function (req, res) {
-  throw { statusCode: 501, message: "Ouch!" };
+  throw { statusCode: 501, message: 'Ouch!' };
 };
