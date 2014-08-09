@@ -8,6 +8,8 @@ Synth-api is one of the major features provided by the [Synth](http://www.synthj
 
 Within your request handlers, you can either return data that will be JSONified and sent back to the client (useful for stubbing during development), a promise that will then return such data, or call the methods on the Express response object directly. See the examples below.
 
+For each request handler you can specify _services_ (i.e. dependencies) that should be injected.
+
 [![Build Status](https://travis-ci.org/JonAbrams/synth-api.svg)](https://travis-ci.org/JonAbrams/synth-api)
 [![Code Climate](https://codeclimate.com/github/JonAbrams/synth-api.png)](https://codeclimate.com/github/JonAbrams/synth-api)
 [![Test Coverage](https://codeclimate.com/github/JonAbrams/synth-api/coverage.png)](https://codeclimate.com/github/JonAbrams/synth-api)
@@ -23,6 +25,7 @@ var synthApi = require('synth-api');
 var app = express();
 synthApi.generateHandlers({
   resourceDir: __dirname + '/resources', // This is the default, not required
+  serviceDir: __dirname + '/services', // also optional
   prefix: '/api', // This is the default, not required
   app: app,
   timeout: 300
@@ -59,16 +62,34 @@ exports.get = function (req, res) {
 };
 
 // Or talk directly to Express response object
-exports.post = function (req, res) {
-  req.db.collection('tweets').insert({
+exports.post = function (req, user, db, res) {
+  // db is a service declared in /services/db.js
+  db.collection('tweets').insert({
     message: req.body.message,
-    createdAt: new Date()
+    createdAt: new Date(),
+    user_id: user.id
   }, function (err, data) {
     if (err) {
       res.status(500).send("Something went wrong: " + err.message);
     } else {
       res.send(data);
     }
+  });
+};
+```
+
+**services/db.js**
+
+```javascript
+var db = require('promised-mongo')('localhost');
+exports.db = function () {
+  return db;
+};
+
+exports.user = function (db, req) {
+  return db.collections('users').find({
+    username: req.get('X-username'),
+    password: hashPassword( req.get('X-password') )
   });
 };
 ```
@@ -111,6 +132,24 @@ Each handler object contains the following keys:
 ## Defining API endpoints
 
 For this, just check out the existing [Synth Documentation](http://www.synthjs.com).
+
+## Defining Services
+
+When initializing synth-api, you can specify the directory that it should recursively parse. All JavaScript and CoffeeScript files will be parsed and any publicly exposed functions will be registered as services.
+
+API endpoints can depend on any registered service. Services can then depend on other services.
+
+## Using Services
+
+To use a service, just specify it as a parameter and you're done! The name of the parameter tell synth-api which service should be used to satisfy it, the order of both the API endpoint and service parameters don't matter.
+
+e.g.
+
+```javascript
+exports.post = function (req, user, db, params) { … };
+// is the same as
+exports.post = (user, params, db, req) { … };
+```
 
 ## License
 
