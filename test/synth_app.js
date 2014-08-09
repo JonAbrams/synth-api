@@ -10,11 +10,11 @@ describe('synth-api module', function () {
   var app;
   before(function () {
     app = express();
-    app.use(bodyParser());
+    app.use(bodyParser.json());
     app.use(synthApi.configParser());
     app.use(function (req, res, next) {
       if (req.config.admin) {
-        return res.send(401);
+        return res.status(401).end();
       }
       next();
     });
@@ -153,7 +153,7 @@ describe('synth-api module', function () {
   describe('custom catchAll error', function () {
     before(function () {
       app = express();
-        app.use(bodyParser());
+        app.use(bodyParser.json());
         synthApi = require('../main');
         synthApi.generateHandlers({
           resourceDir: __dirname + '/sample_project/resources',
