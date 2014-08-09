@@ -13,13 +13,14 @@ describe('synth-api module', function () {
     app.use(bodyParser());
     app.use(synthApi.configParser());
     app.use(function (req, res, next) {
-      if (req.config.auth) {
+      if (req.config.admin) {
         return res.send(401);
       }
       next();
     });
     synthApi.generateHandlers({
       resourceDir: __dirname + '/sample_project/resources',
+      serviceDir: __dirname + '/sample_project/services',
       app: app,
       timeout: 100
     });
@@ -41,10 +42,24 @@ describe('synth-api module', function () {
       });
     });
 
+    it('cannot call a configed endpoint', function () {
+      return request(app).post('/api/products/asAdmin')
+      .send({ name: "Fancy shoes" })
+      .expect(401);
+    });
+
     it('cannot create a new product without auth', function () {
       return request(app).post('/api/products')
       .send({ name: "Fancy shoes" })
       .expect(401);
+    });
+
+    it('creates a new product with auth', function () {
+      return request(app).post('/api/products')
+      .set('X-Username', 'jonny_eh')
+      .send({ name: "Fancy shoes" })
+      .expect(200)
+      .expect({ success: true });
     });
 
     it('created a new variation', function () {
@@ -95,7 +110,7 @@ describe('synth-api module', function () {
         .expect(500)
         .expect('Ouch!')
         .then(function () {
-          errorLog.should.contain('Error thrown by GET /api/products/oops\nError: Ouch!\n    at exports.getOops');
+          errorLog.should.contain('Error thrown by GET /api/products/oops\nError: Ouch!\n');
         });
       });
 

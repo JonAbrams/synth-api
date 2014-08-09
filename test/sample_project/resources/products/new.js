@@ -1,8 +1,5 @@
-exports.post = function (config) {
-  config.auth = true;
+exports.post = function (user) {
+  if (!user) throw 401;
 
-  return function (req, res) {
-    // create new product
-    return { success: true };
-  };
+  return { success: true };
 };

@@ -7,10 +7,14 @@ describe('handlersParser module', function () {
 
   describe('good resources dir', function () {
     var rootDir = path.join(__dirname, 'sample_project/resources');
-    var handlers = handlersParser.parse({
-      resourceDir: rootDir,
-      prefix: '/api',
-      timeout: 5000
+    var handlers;
+
+    before(function () {
+      handlers = handlersParser.parse({
+        resourceDir: rootDir,
+        prefix: '/api',
+        timeout: 5000
+      });
     });
 
     it('returns the expected structure', function () {
@@ -87,8 +91,19 @@ describe('handlersParser module', function () {
           path: '/api/products',
           isCustom: false,
           funcName: 'post',
+          config: {},
+          resources: [
+            'products'
+          ]
+        },
+        {
+          file: path.join(rootDir, 'products/restricted.js'),
+          method: 'post',
+          path: '/api/products/asAdmin',
+          isCustom: true,
+          funcName: 'postAsAdmin',
           config: {
-            auth: true
+            admin: true
           },
           resources: [
             'products'

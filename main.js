@@ -13,6 +13,7 @@ exports.generateHandlers = function (options) {
 
   var handlers = handlersParser.parse({
     resourceDir: options.resourceDir || path.join( process.cwd(), 'resources'),
+    serviceDir: options.serviceDir || path.join( process.cwd(), 'services'),
     timeout: options.timeout || 5000,
     prefix: options.prefix || '/api'
   });
