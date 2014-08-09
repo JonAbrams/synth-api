@@ -1,6 +1,6 @@
 # SYNTH-API
 
-Scans through the specified directory and builts endpoints that are then added to an Express app.
+Scans through the specified directory and builds endpoints that are then added to an Express app.
 
 Each API endpoint is crafted by merely by giving it the name of the HTTP method it handles.
 
