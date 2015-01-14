@@ -118,7 +118,7 @@ An object with the following keys (all are optional).
 
 ### Returns
 
-generateHandlers() returns an object with a 'handers' key, which is an array of all the API handlers generated.
+generateHandlers() returns an object with a 'handlers' key, which is an array of all the API handlers generated.
 
 Each handler object contains the following keys:
 
