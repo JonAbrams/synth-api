@@ -1,4 +1,5 @@
 var synthApi = require('../main');
+var DI = require('synth-di');
 
 var request = require('supertest-as-promised');
 var express = require('express');
@@ -169,6 +170,31 @@ describe('synth-api module', function () {
       return request(app).get('/api/thing-that-doesnt-exist')
       .expect(404)
       .expect('this is not the data you are looking for');
+    });
+  });
+
+  describe('uses custom DI', function () {
+    var handlers;
+    before(function () {
+      var di = new DI();
+      di.register(function testMsg () {
+        return 'hi';
+      });
+
+      app = express();
+      app.use(bodyParser.json());
+      synthApi = require('../main');
+      handlers = synthApi.generateHandlers({
+        resourceDir: __dirname + '/sample_project/resources',
+        app: app,
+        timeout: 100,
+        di: di
+      });
+    });
+
+    it('uses custom di', function () {
+      return request(app).put('/api/orders/123')
+      .expect('hi');
     });
   });
 });
