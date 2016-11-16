@@ -147,8 +147,9 @@ e.g.
 
 ```javascript
 exports.post = function (req, user, db, params) { … };
-// is the same as
-exports.post = (user, params, db, req) { … };
+// is the same as: 
+exports.post = function (user, params, db, req) { … };
+// (note the different order of parameters)
 ```
 
 ## License
