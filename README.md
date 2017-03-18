@@ -90,12 +90,12 @@ exports.user = async function(params, db) {
 
 exports.currentUser = async function(db, req) {
   return db.collection('users').findOne({
-    token: cookies(req.headers).token
+    token: cookieFromHeaders(req.headers, 'token')
   });
 }
 
-function cookies(headers) {
-  const re = new RegExp(`[; ]${token}=([^\\s;]*)`);
+function cookieFromHeaders(headers, cookie) {
+  const re = new RegExp(`[; ]${cookie}=([^\\s;]*)`);
   const match = ('' + headers['Cookie']).match(re);
   return unescape(match[1]);
 }
