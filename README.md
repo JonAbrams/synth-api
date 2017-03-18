@@ -1,9 +1,11 @@
 # SYNTH-API
 
-Declare a route, give it a handler. Each handler specifies what middleware it depends on, when a request comes in, the middlewear is resolved, then the handler is called.
+Declare a route, give it a handler. Each handler specifies what middleware it depends on, when a request comes in, the middleware is resolved, then the handler is called with the results of each middleware passed in as parameters.
 
 Within your request handlers, you can:
-1. Return an object that will be JSONified and sent back to the client, a promise that will then return such data, or make use of the `res` middleware for more advanced operations.
+1. Return an object that will be JSONified and sent back to the client
+2. Return a promise that will then return an object, which will be converted to JSON and sent to the client. 
+3. Make use of the `res` middleware for more advanced operations.
 
 [![Build Status](https://travis-ci.org/JonAbrams/synth-api.svg)](https://travis-ci.org/JonAbrams/synth-api)
 [![Code Climate](https://codeclimate.com/github/JonAbrams/synth-api.png)](https://codeclimate.com/github/JonAbrams/synth-api)
